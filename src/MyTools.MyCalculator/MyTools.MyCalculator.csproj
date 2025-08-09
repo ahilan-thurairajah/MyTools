@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyTools.Core\MyTools.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+  <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+  <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.7" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <!-- Exclude any leftover design-time stub file from compilation -->
+  <ItemGroup>
+    <Compile Remove="EditorDesignTimeStubs.cs" />
+  </ItemGroup>
+
+
+</Project>

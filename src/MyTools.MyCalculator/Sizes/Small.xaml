@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Window size -->
+  <sys:Double x:Key="AppWindowWidth">380</sys:Double>
+  <sys:Double x:Key="AppWindowHeight">640</sys:Double>
+  <sys:Double x:Key="AppScale">0.90</sys:Double>
+
+  <!-- Keypad button sizes -->
+  <sys:Double x:Key="PadButtonWidth">56</sys:Double>
+  <sys:Double x:Key="PadButtonHeight">56</sys:Double>
+  <sys:Double x:Key="PadButtonFontSize">16</sys:Double>
+
+  <!-- Text sizes -->
+  <sys:Double x:Key="FormulaFontSize">20</sys:Double>
+  <sys:Double x:Key="ResultFontSize">16</sys:Double>
+
+  <!-- Scientific pad layout -->
+  <Thickness x:Key="SciNumericPadMargin">0,0,0,0</Thickness>
+  <Thickness x:Key="SciSeparatorMargin">0,6,0,6</Thickness>
+</ResourceDictionary>

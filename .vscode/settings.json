@@ -1,0 +1,4 @@
+{
+  "dotnet.defaultSolution": "MyTools.sln",
+  "dotnet.defaultConfiguration": "Debug"
+}

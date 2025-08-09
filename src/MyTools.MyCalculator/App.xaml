@@ -1,0 +1,13 @@
+﻿<Application x:Class="MyTools.MyCalculator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Baseline dictionaries to ensure styles and sizes exist at startup -->
+                <ResourceDictionary Source="Themes/Light.xaml" />
+                <ResourceDictionary Source="Sizes/Medium.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
