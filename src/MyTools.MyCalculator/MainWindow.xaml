@@ -48,15 +48,7 @@
             </ToolBarTray>
         </DockPanel>
 
-        <!-- Status bar shows the current formula -->
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="Formula:" Margin="0,0,8,0"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock Text="{Binding ElementName=FormulaInput, Path=Text}"/>
-            </StatusBarItem>
-        </StatusBar>
+    <!-- Removed obsolete status bar formula display -->
 
     <!-- Main content with overall scale -->
     <Grid DockPanel.Dock="Top">
