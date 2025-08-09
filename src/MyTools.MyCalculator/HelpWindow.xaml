@@ -1,0 +1,46 @@
+<Window x:Class="MyTools.MyCalculator.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help - My Calculator" Height="480" Width="720" WindowStartupLocation="CenterOwner">
+    <ScrollViewer Padding="16">
+        <StackPanel>
+            <TextBlock Text="My Calculator - Help" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+            <TextBlock TextWrapping="Wrap">
+This calculator supports three modes: General, Scientific, and Financial.
+Use View → Mode to switch. History and Settings are available from the View menu or toolbar.
+            </TextBlock>
+            <Separator Margin="0,12,0,12"/>
+            <TextBlock FontSize="16" FontWeight="Bold" Text="General Mode"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">
+Type expressions like 1+2*3, use parentheses, and press Enter or =.
+            </TextBlock>
+            <TextBlock FontSize="16" FontWeight="Bold" Text="Scientific Mode"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">
+Functions include sin(x), cos(x), tan(x), ln(x), log(x), sqrt(x), min(...), max(...), constants pi and e, and ^ for power.
+Angles are in radians.
+            </TextBlock>
+            <TextBlock>
+                Learn trig functions: <Hyperlink NavigateUri="https://www.khanacademy.org/math/trigonometry/trig-functions" RequestNavigate="Hyperlink_RequestNavigate">Khan Academy</Hyperlink>
+            </TextBlock>
+            <TextBlock FontSize="16" FontWeight="Bold" Margin="12,12,0,0" Text="Financial Mode"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">
+Functions include pmt, pv, fv, nper. Use commas to separate arguments.
+            </TextBlock>
+            <StackPanel>
+                <TextBlock>PMT: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>PV: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>FV: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>NPER: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+            </StackPanel>
+            <Separator Margin="0,12,0,12"/>
+            <TextBlock FontSize="16" FontWeight="Bold" Text="History"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">
+The app keeps unique expressions with usage count. Use View → History to search and reuse.
+            </TextBlock>
+            <TextBlock FontSize="16" FontWeight="Bold" Text="Settings"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">
+Change theme, size, default mode, and history limit from View → Settings.
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
