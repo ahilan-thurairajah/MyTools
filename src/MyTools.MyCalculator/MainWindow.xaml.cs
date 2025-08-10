@@ -106,7 +106,14 @@ public partial class MainWindow : Window
         {
             var eval = new ExpressionEvaluator(_calc);
             var result = eval.Evaluate(expr);
-            ResultText.Text = result.ToString(CultureInfo.InvariantCulture);
+            // Format with thousands separators and up to 6 decimals, trimming trailing zeros
+            // Example: 1234567.8900 -> "1,234,567.89"
+            string formatted = string.Format(CultureInfo.InvariantCulture, "{0:N6}", result);
+            if (formatted.Contains('.'))
+            {
+                formatted = formatted.TrimEnd('0').TrimEnd('.');
+            }
+            ResultText.Text = formatted;
 
             // Save to history
             if (Application.Current is App app && app.HistoryStore is not null)

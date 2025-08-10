@@ -55,7 +55,9 @@
                     </Button>
                     <Separator/>
                     <!-- Keep History as text for clarity -->
-                    <Button Content="History" Click="OpenHistory_Click"/>
+                    <Button Click="OpenHistory_Click" ToolTip="History">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE81C;"/>
+                    </Button>
                     <!-- Help '?' button -->
                     <Button Click="OpenHelp_Click" ToolTip="Help">?</Button>
                 </ToolBar>
@@ -79,7 +81,7 @@
                             <TextBlock Text="Type a formula and press Enter or click ="
                                        Foreground="{DynamicResource ScreenTextBrush}"
                                        Opacity="0.9"
-                                       FontSize="13"
+                                       FontSize="{DynamicResource FormulaFontSize}"
                                        FontWeight="SemiBold"
                                        Margin="0,0,0,4"/>
                             <TextBlock x:Name="ScreenModeLabel" Text="Calculator" Foreground="#CCFFFFFF" FontSize="12" HorizontalAlignment="Right"/>
@@ -440,7 +442,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df">
+                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/nper-function">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Number of Periods (NPER)"/>
