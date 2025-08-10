@@ -22,6 +22,7 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=admin
+SetupIconFile=MyCalculator.ico
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
