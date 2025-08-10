@@ -31,5 +31,50 @@
       "group": "test",
       "problemMatcher": ["$msCompile"]
     }
+    ,
+    {
+  "label": "publish: MyCalculator (Release x64 single-file)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+  "publish",
+  "src/MyTools.MyCalculator/MyTools.MyCalculator.csproj",
+        "-c",
+        "Release",
+        "-r",
+        "win-x64",
+        "--self-contained",
+        "true",
+        "-p:PublishSingleFile=true",
+        "-p:IncludeNativeLibrariesForSelfExtract=true",
+        "-o",
+        "installer/app"
+      ],
+      "problemMatcher": ["$msCompile"]
+    },
+    {
+      "label": "installer: build (Inno Setup)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "installer/build-installer.ps1",
+        "-Configuration",
+        "Release"
+      ]
+    },
+    {
+      "label": "installer: open output",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "Start-Process explorer.exe 'installer/output'"
+      ]
+    }
   ]
 }
