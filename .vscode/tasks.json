@@ -67,6 +67,24 @@
       ]
     },
     {
+      "label": "installer: build (signed)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "installer/build-installer.ps1",
+        "-Configuration",
+        "Release",
+        "-PfxPath",
+        "${env:SIGN_PFX}",
+        "-PfxPassword",
+        "${env:SIGN_PWD}"
+      ]
+    },
+    {
       "label": "installer: open output",
       "type": "shell",
       "command": "powershell",
