@@ -12,7 +12,8 @@
         ResizeMode="NoResize"
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackgroundBrush}">
+    Background="{DynamicResource WindowBackgroundBrush}"
+    FocusManager.FocusedElement="{Binding ElementName=FormulaInput}">
     <DockPanel LastChildFill="False">
         <DockPanel DockPanel.Dock="Top">
             <Menu DockPanel.Dock="Top">
@@ -64,8 +65,10 @@
                         <StackPanel>
                             <!-- Instruction banner -->
                             <TextBlock Text="Type a formula and press Enter or click ="
-                                       Foreground="#99FFFFFF"
-                                       FontSize="12"
+                                       Foreground="{DynamicResource ScreenTextBrush}"
+                                       Opacity="0.9"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
                                        Margin="0,0,0,4"/>
                             <TextBlock x:Name="ScreenModeLabel" Text="Calculator" Foreground="#CCFFFFFF" FontSize="12" HorizontalAlignment="Right"/>
                             <TextBox x:Name="FormulaInput"
@@ -75,7 +78,8 @@
                                      KeyDown="FormulaInput_KeyDown"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     Foreground="{DynamicResource ScreenTextBrush}"/>
+                                     Foreground="{DynamicResource ScreenTextBrush}"
+                                     CaretBrush="{DynamicResource ScreenTextBrush}"/>
                             <TextBlock x:Name="ResultText" FontSize="{DynamicResource ResultFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="#33000000" Opacity="0.5" BlurRadius="6" ShadowDepth="0"/>
@@ -117,40 +121,67 @@
 
                 <StackPanel x:Name="SciPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="6">
-                        <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+            <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Sine function"/>
                                     <TextBlock Text="Use: sin(angleRadians)"/>
                                     <TextBlock>
-                                        <Hyperlink NavigateUri="https://www.khanacademy.org/math/trigonometry/trig-functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Sine of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: sin(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+            <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Cosine function"/>
                                     <TextBlock Text="Use: cos(angleRadians)"/>
                                     <TextBlock>
-                                        <Hyperlink NavigateUri="https://www.khanacademy.org/math/trigonometry/trig-functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Cosine of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: cos(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+            <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Tangent function"/>
                                     <TextBlock Text="Use: tan(angleRadians)"/>
                                     <TextBlock>
-                                        <Hyperlink NavigateUri="https://www.khanacademy.org/math/trigonometry/trig-functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Tangent of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: tan(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Logarithm">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Natural logarithm"/>
@@ -160,8 +191,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Natural logarithm (base e)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: ln(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Logarithm">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Logarithm base 10"/>
@@ -171,8 +210,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Logarithm base 10" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: log(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Square_root">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Square root"/>
@@ -182,9 +229,17 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Square root" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: sqrt(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
 
-                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}">
+                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Tag="https://en.wikipedia.org/wiki/Exponentiation">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Exponent"/>
@@ -194,8 +249,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Exponentiation" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: a^b (a to the power b)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Minimum"/>
@@ -205,8 +268,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Minimum" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: min(a,b,...)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Maximum"/>
@@ -216,8 +287,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Maximum" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: max(a,b,...)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Pi">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Pi constant"/>
@@ -227,8 +306,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Pi constant (≈ 3.14159)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pi" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/E_(mathematical_constant)">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Euler's number"/>
@@ -238,14 +325,30 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Euler's number (≈ 2.71828)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: e" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Comma-separated_values">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Argument separator"/>
                                     <TextBlock Text="Use: Separate function arguments, e.g., max(1,2)"/>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Argument separator" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: Separate function arguments" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
                     </UniformGrid>
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->
@@ -276,7 +379,7 @@
 
                 <StackPanel x:Name="FinPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="5">
-                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Payment (PMT)"/>
@@ -286,8 +389,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Payment (loan)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pmt(rate, nper, pv, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Present Value (PV)"/>
@@ -297,8 +408,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Present Value" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pv(rate, nper, pmt, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Future Value (FV)"/>
@@ -308,8 +427,16 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Future Value" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: fv(rate, nper, pmt, [pv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Number of Periods (NPER)"/>
@@ -319,14 +446,30 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Number of Periods" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: nper(rate, pmt, pv, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}">
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/overview-of-formulas-in-excel-ecfdc708-9162-49e8-b993-c311f47ca173">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Argument separator"/>
                                     <TextBlock Text="Use: Separate function arguments, e.g., pmt(0.05/12, 60, 10000)"/>
                                 </StackPanel>
                             </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Argument separator" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: Separate function arguments" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
                         </Button>
                     </UniformGrid>
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->

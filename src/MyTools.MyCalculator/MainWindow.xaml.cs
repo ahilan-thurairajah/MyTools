@@ -6,12 +6,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Globalization;
 using MyTools.Core;
 using MyTools.MyCalculator.Services;
+using System.Diagnostics;
+using System.Windows.Navigation;
 
 namespace MyTools.MyCalculator;
 
@@ -29,6 +30,7 @@ public partial class MainWindow : Window
         Loaded += (_, __) =>
         {
             ApplyModeMenuChecks();
+            // Initial focus is set in XAML via FocusManager.FocusedElement
             // Defer sizing to after initial layout to ensure correct measurement
             Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         };
@@ -160,6 +162,37 @@ public partial class MainWindow : Window
     private void About_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show(this, "My Calculator\nPart of the MyTools suite.", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void OpenHelp_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new HelpWindow { Owner = this };
+        win.ShowDialog();
+    }
+
+    public void HelpLink_RequestNavigate(object? sender, RequestNavigateEventArgs e)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
+            e.Handled = true;
+        }
+        catch { }
+    }
+
+    private void OpenLearnLink_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe && fe is MenuItem mi)
+        {
+            var url = mi.CommandParameter as string;
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); } catch { }
+            }
+        }
     }
 
     private void OpenSettings_Click(object sender, RoutedEventArgs e)

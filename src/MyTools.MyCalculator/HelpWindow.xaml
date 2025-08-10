@@ -20,7 +20,7 @@ Functions include sin(x), cos(x), tan(x), ln(x), log(x), sqrt(x), min(...), max(
 Angles are in radians.
             </TextBlock>
             <TextBlock>
-                Learn trig functions: <Hyperlink NavigateUri="https://www.khanacademy.org/math/trigonometry/trig-functions" RequestNavigate="Hyperlink_RequestNavigate">Khan Academy</Hyperlink>
+                Learn trig functions: <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="Hyperlink_RequestNavigate">Wikipedia: Trigonometric functions</Hyperlink>
             </TextBlock>
             <TextBlock FontSize="16" FontWeight="Bold" Margin="12,12,0,0" Text="Financial Mode"/>
             <TextBlock TextWrapping="Wrap" Margin="0,4,0,8">

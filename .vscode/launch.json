@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET: MyTools.MyCalculator",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}\\src\\MyTools.MyCalculator\\bin\\${config:dotnet.defaultConfiguration}\\net8.0-windows\\MyTools.MyCalculator.exe",
+      "cwd": "${workspaceFolder}\\src\\MyTools.MyCalculator",
+      "args": [],
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "justMyCode": true
+    }
+  ]
+}
