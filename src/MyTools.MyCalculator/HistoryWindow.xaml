@@ -4,7 +4,7 @@
         Title="History" Height="400" Width="420" WindowStartupLocation="CenterOwner">
   <DockPanel>
     <StackPanel DockPanel.Dock="Top" Margin="8,8,8,0">
-      <TextBlock Text="Double-click a row to reuse the formula"/>
+      <TextBlock Text="Double-click a row to reuse the formula" Opacity="0.8"/>
       <DockPanel Margin="0,6,0,0">
         <TextBox x:Name="SearchBox" Width="220" Height="26" Margin="0,0,6,0"/>
         <Button Content="Search" Width="80" Click="Search_Click"/>
@@ -14,10 +14,28 @@
     <ListView x:Name="HistoryList" Margin="8" MouseDoubleClick="HistoryList_MouseDoubleClick">
       <ListView.View>
         <GridView>
-          <GridViewColumn Header="#" Width="40" DisplayMemberBinding="{Binding Id}"/>
-          <GridViewColumn Header="Use" Width="40" DisplayMemberBinding="{Binding UsageCount}"/>
+          <GridViewColumn Header="#" Width="40">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Id}" TextAlignment="Right"/>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+          <GridViewColumn Header="Use" Width="40">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding UsageCount}" TextAlignment="Right"/>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
           <GridViewColumn Header="Expression" Width="230" DisplayMemberBinding="{Binding Expression}"/>
-          <GridViewColumn Header="Result" Width="90" DisplayMemberBinding="{Binding Result}"/>
+          <GridViewColumn Header="Result" Width="90">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Result}" TextAlignment="Right"/>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
         </GridView>
       </ListView.View>
     </ListView>

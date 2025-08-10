@@ -27,9 +27,9 @@ Angles are in radians.
 Functions include pmt, pv, fv, nper. Use commas to separate arguments.
             </TextBlock>
             <StackPanel>
-                <TextBlock>PMT: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
-                <TextBlock>PV: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
-                <TextBlock>FV: <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>PMT: <Hyperlink NavigateUri="https://exceljet.net/functions/pmt-function" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>PV: <Hyperlink NavigateUri="https://exceljet.net/functions/pv-function" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
+                <TextBlock>FV: <Hyperlink NavigateUri="https://exceljet.net/functions/fv-function" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
                 <TextBlock>NPER: <Hyperlink NavigateUri="https://exceljet.net/functions/nper-function" RequestNavigate="Hyperlink_RequestNavigate">docs</Hyperlink></TextBlock>
             </StackPanel>
             <Separator Margin="0,12,0,12"/>

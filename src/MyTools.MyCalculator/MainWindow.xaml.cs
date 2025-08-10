@@ -99,6 +99,7 @@ public partial class MainWindow : Window
         if (string.IsNullOrWhiteSpace(expr))
         {
             ResultText.Text = string.Empty;
+            if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
             return;
         }
 
@@ -114,6 +115,7 @@ public partial class MainWindow : Window
                 formatted = formatted.TrimEnd('0').TrimEnd('.');
             }
             ResultText.Text = formatted;
+            if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
 
             // Save to history
             if (Application.Current is App app && app.HistoryStore is not null)
@@ -124,7 +126,11 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            ResultText.Text = ex.Message;
+            if (ErrorText != null)
+            {
+                ErrorText.Text = ex.Message;
+                ErrorText.Visibility = Visibility.Visible;
+            }
         }
     }
 
@@ -169,6 +175,7 @@ public partial class MainWindow : Window
     {
         FormulaInput.Text = string.Empty;
         ResultText.Text = string.Empty;
+    if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e) => Close();

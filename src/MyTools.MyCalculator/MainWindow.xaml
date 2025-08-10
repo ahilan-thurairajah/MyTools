@@ -40,6 +40,14 @@
             </Menu>
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar>
+                    <ToolBar.Resources>
+                        <!-- Consistent padding and icon size for toolbar buttons -->
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="MinHeight" Value="28"/>
+                            <Setter Property="MinWidth" Value="28"/>
+                        </Style>
+                    </ToolBar.Resources>
                     <!-- Settings icon -->
                     <Button Click="OpenSettings_Click" ToolTip="Settings">
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE713;"/>
@@ -108,11 +116,15 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource FormulaFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
+                            <!-- Subtle divider between formula and result -->
+                            <Border Height="1" Margin="0,6,0,6" Background="#22FFFFFF"/>
+                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource FormulaFontSize}" Margin="0,0,0,0" Foreground="{DynamicResource ScreenTextBrush}" FontFamily="Cascadia Mono, Consolas, 'Segoe UI'">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="#33000000" Opacity="0.5" BlurRadius="6" ShadowDepth="0"/>
                                 </TextBlock.Effect>
                             </TextBlock>
+                            <!-- Inline error message below the result; hidden unless an error occurs -->
+                            <TextBlock x:Name="ErrorText" Foreground="OrangeRed" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
                         </StackPanel>
                     </Border>
                 </Border>
@@ -391,7 +403,7 @@
 
                 <StackPanel x:Name="FinPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="5">
-                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441">
+                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/pmt-function">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Payment (PMT)"/>
@@ -408,7 +420,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69">
+                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/pv-function">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Present Value (PV)"/>
@@ -425,7 +437,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62">
+                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/fv-function">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Future Value (FV)"/>
