@@ -86,10 +86,11 @@
     <Setter Property="Background" Value="#FFFDFDFD"/>
     <Setter Property="BorderBrush" Value="{StaticResource AccentBrushDark}"/>
     <Setter Property="BorderThickness" Value="1"/>
+  <Setter Property="Cursor" Value="Hand"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+      <Border x:Name="Chrome" CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Border.Effect>
               <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.25" BlurRadius="10" ShadowDepth="1"/>
             </Border.Effect>
@@ -99,10 +100,14 @@
             <Trigger Property="IsMouseOver" Value="True">
               <Setter Property="Background" Value="{StaticResource AccentBrushLight}"/>
               <Setter Property="Foreground" Value="White"/>
+        <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter TargetName="Chrome" Property="BorderThickness" Value="2"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
               <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
               <Setter Property="Foreground" Value="White"/>
+        <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrushDark}"/>
+        <Setter TargetName="Chrome" Property="BorderThickness" Value="2"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
