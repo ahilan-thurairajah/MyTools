@@ -29,13 +29,13 @@ jobs:
       - name: Install Inno Setup
         run: choco install innosetup --yes
 
-      - name: Build
-        run: dotnet build MyTools.sln -c Release
-
       - name: Generate App Icon
         run: |
           dotnet build tools/IconGen/IconGen.csproj -c Release
           dotnet run --project tools/IconGen/IconGen.csproj -c Release -- installer
+
+      - name: Build
+        run: dotnet build MyTools.sln -c Release
 
       - name: Build Installer
         shell: pwsh
