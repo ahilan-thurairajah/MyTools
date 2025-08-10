@@ -63,3 +63,7 @@ Thumbs.db
 *~
 **/bin.old/
 **/obj.old/
+
+# Installer build outputs (do not track large binaries)
+installer/app/
+installer/output/
