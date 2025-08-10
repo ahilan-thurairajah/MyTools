@@ -92,45 +92,47 @@
                 <!-- Mode-specific pads -->
                 <StackPanel x:Name="GeneralPad" Orientation="Vertical">
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,8,0,0">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
 
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 
                 <StackPanel x:Name="SciPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="6">
-            <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+            <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
                 ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="Sine function"/>
-                                    <TextBlock Text="Use: sin(angleRadians)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Sine function"/>
+                                        <TextBlock Text="Use: sin(angleRadians)"/>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
                             </Button.ToolTip>
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -141,16 +143,18 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-            <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+            <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
                 ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="Cosine function"/>
-                                    <TextBlock Text="Use: cos(angleRadians)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Cosine function"/>
+                                        <TextBlock Text="Use: cos(angleRadians)"/>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
                             </Button.ToolTip>
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -161,16 +165,18 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-            <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+            <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
                 ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
                             <Button.ToolTip>
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="Tangent function"/>
-                                    <TextBlock Text="Use: tan(angleRadians)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Tangent function"/>
+                                        <TextBlock Text="Use: tan(angleRadians)"/>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
                             </Button.ToolTip>
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -181,7 +187,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Logarithm">
+                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Logarithm">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Natural logarithm"/>
@@ -200,7 +206,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Logarithm">
+                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Logarithm">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Logarithm base 10"/>
@@ -219,7 +225,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Square_root">
+                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Square_root">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Square root"/>
@@ -239,7 +245,7 @@
                             </Button.ContextMenu>
                         </Button>
 
-                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Tag="https://en.wikipedia.org/wiki/Exponentiation">
+                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Exponentiation">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Exponent"/>
@@ -258,7 +264,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
+                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Minimum"/>
@@ -277,7 +283,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
+                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Maximum"/>
@@ -296,7 +302,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Pi">
+                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Pi">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Pi constant"/>
@@ -315,7 +321,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/E_(mathematical_constant)">
+                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/E_(mathematical_constant)">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Euler's number"/>
@@ -334,7 +340,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://en.wikipedia.org/wiki/Comma-separated_values">
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Comma-separated_values">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Argument separator"/>
@@ -354,32 +360,32 @@
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->
                     <Rectangle Height="1" Fill="#33000000" Margin="{DynamicResource SciSeparatorMargin}"/>
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="{DynamicResource SciNumericPadMargin}">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 
                 <StackPanel x:Name="FinPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="5">
-                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441">
+                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Payment (PMT)"/>
@@ -398,7 +404,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69">
+                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Present Value (PV)"/>
@@ -417,7 +423,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62">
+                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Future Value (FV)"/>
@@ -436,7 +442,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df">
+                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Number of Periods (NPER)"/>
@@ -455,7 +461,7 @@
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Tag="https://support.microsoft.com/en-us/office/overview-of-formulas-in-excel-ecfdc708-9162-49e8-b993-c311f47ca173">
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/overview-of-formulas-in-excel-ecfdc708-9162-49e8-b993-c311f47ca173">
                             <Button.ToolTip>
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Argument separator"/>
@@ -475,26 +481,26 @@
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->
                     <Rectangle Height="1" Fill="#33000000" Margin="0,8,0,8"/>
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 

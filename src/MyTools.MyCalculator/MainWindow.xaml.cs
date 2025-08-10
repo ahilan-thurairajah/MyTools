@@ -33,6 +33,8 @@ public partial class MainWindow : Window
             // Initial focus is set in XAML via FocusManager.FocusedElement
             // Defer sizing to after initial layout to ensure correct measurement
             Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            // Ensure caret blinks by explicitly focusing the input after load
+            Dispatcher.BeginInvoke(new Action(() => { FormulaInput.Focus(); Keyboard.Focus(FormulaInput); }), System.Windows.Threading.DispatcherPriority.Background);
         };
         ContentRendered += (_, __) => Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.Background);
     }
@@ -193,6 +195,9 @@ public partial class MainWindow : Window
                 try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); } catch { }
             }
         }
+    // Return focus to the input so caret remains visible
+    FormulaInput.Focus();
+    Keyboard.Focus(FormulaInput);
     }
 
     private void OpenSettings_Click(object sender, RoutedEventArgs e)
@@ -265,6 +270,8 @@ public partial class MainWindow : Window
             app.Mode = "General";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
@@ -275,6 +282,8 @@ public partial class MainWindow : Window
             app.Mode = "Scientific";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
@@ -285,6 +294,8 @@ public partial class MainWindow : Window
             app.Mode = "Financial";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
