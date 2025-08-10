@@ -16,6 +16,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+  <ApplicationIcon>..\..\installer\MyCalculator.ico</ApplicationIcon>
   </PropertyGroup>
 
   <!-- Exclude any leftover design-time stub file from compilation -->

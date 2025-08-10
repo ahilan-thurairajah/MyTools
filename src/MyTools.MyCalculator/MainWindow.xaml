@@ -12,7 +12,8 @@
         ResizeMode="NoResize"
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackgroundBrush}">
+    Background="{DynamicResource WindowBackgroundBrush}"
+    FocusManager.FocusedElement="{Binding ElementName=FormulaInput}">
     <DockPanel LastChildFill="False">
         <DockPanel DockPanel.Dock="Top">
             <Menu DockPanel.Dock="Top">
@@ -33,30 +34,45 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
+                    <MenuItem Header="_View Help" Click="OpenHelp_Click"/>
                     <MenuItem Header="_About" Click="About_Click"/>
                 </MenuItem>
             </Menu>
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar>
-                    <Button Content="Settings" Click="OpenSettings_Click"/>
+                    <ToolBar.Resources>
+                        <!-- Consistent padding and icon size for toolbar buttons -->
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="MinHeight" Value="28"/>
+                            <Setter Property="MinWidth" Value="28"/>
+                        </Style>
+                    </ToolBar.Resources>
+                    <!-- Settings icon -->
+                    <Button Click="OpenSettings_Click" ToolTip="Settings">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE713;"/>
+                    </Button>
                     <Separator/>
-                    <Button Content="Clear" Click="Clear_Click"/>
-                    <Button Content="= Evaluate" Click="Evaluate_Click"/>
+                    <!-- Clear icon (trash) -->
+                    <Button Click="Clear_Click" ToolTip="Clear">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE74D;"/>
+                    </Button>
+                    <!-- Evaluate icon (calculator equal to) -->
+                    <Button Click="Evaluate_Click" ToolTip="Evaluate">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE94E;"/>
+                    </Button>
                     <Separator/>
-                    <Button Content="History" Click="OpenHistory_Click"/>
+                    <!-- Keep History as text for clarity -->
+                    <Button Click="OpenHistory_Click" ToolTip="History">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE81C;"/>
+                    </Button>
+                    <!-- Help '?' button -->
+                    <Button Click="OpenHelp_Click" ToolTip="Help">?</Button>
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>
 
-        <!-- Status bar shows the current formula -->
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="Formula:" Margin="0,0,8,0"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock Text="{Binding ElementName=FormulaInput, Path=Text}"/>
-            </StatusBarItem>
-        </StatusBar>
+    <!-- Removed obsolete status bar formula display -->
 
     <!-- Main content with overall scale -->
     <Grid DockPanel.Dock="Top">
@@ -69,6 +85,13 @@
                 <Border Background="{DynamicResource CalculatorBezelBrush}" CornerRadius="8" Padding="8" Margin="0,0,0,8">
                     <Border Background="{DynamicResource CalculatorScreenBrush}" CornerRadius="4" Padding="6">
                         <StackPanel>
+                            <!-- Instruction banner -->
+                            <TextBlock Text="Type a formula and press Enter or click ="
+                                       Foreground="{DynamicResource ScreenTextBrush}"
+                                       Opacity="0.9"
+                                       FontSize="{DynamicResource FormulaFontSize}"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,4"/>
                             <TextBlock x:Name="ScreenModeLabel" Text="Calculator" Foreground="#CCFFFFFF" FontSize="12" HorizontalAlignment="Right"/>
                             <TextBox x:Name="FormulaInput"
                                      FontSize="{DynamicResource FormulaFontSize}"
@@ -76,13 +99,32 @@
                                      VerticalContentAlignment="Center"
                                      KeyDown="FormulaInput_KeyDown"
                                      Background="Transparent"
-                                     BorderThickness="0"
-                                     Foreground="{DynamicResource ScreenTextBrush}"/>
-                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource ResultFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
+                                     Foreground="{DynamicResource ScreenTextBrush}"
+                                     CaretBrush="{DynamicResource AccentBrush}"
+                                     Cursor="IBeam">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrushDark}"/>
+                                        <Setter Property="Padding" Value="4"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <!-- Subtle divider between formula and result -->
+                            <Border Height="1" Margin="0,6,0,6" Background="#22FFFFFF"/>
+                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource FormulaFontSize}" Margin="0,0,0,0" Foreground="{DynamicResource ScreenTextBrush}" FontFamily="Cascadia Mono, Consolas, 'Segoe UI'">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="#33000000" Opacity="0.5" BlurRadius="6" ShadowDepth="0"/>
                                 </TextBlock.Effect>
                             </TextBlock>
+                            <!-- Inline error message below the result; hidden unless an error occurs -->
+                            <TextBlock x:Name="ErrorText" Foreground="OrangeRed" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
                         </StackPanel>
                     </Border>
                 </Border>
@@ -90,106 +132,385 @@
                 <!-- Mode-specific pads -->
                 <StackPanel x:Name="GeneralPad" Orientation="Vertical">
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,8,0,0">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
 
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
 
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 
                 <StackPanel x:Name="SciPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="6">
-                        <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
+            <Button Content="sin(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
+                            <Button.ToolTip>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Sine function"/>
+                                        <TextBlock Text="Use: sin(angleRadians)"/>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Sine of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: sin(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+            <Button Content="cos(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
+                            <Button.ToolTip>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Cosine function"/>
+                                        <TextBlock Text="Use: cos(angleRadians)"/>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Cosine of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: cos(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+            <Button Content="tan(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Trigonometric_functions"
+                ToolTipService.ShowDuration="60000" ToolTipService.InitialShowDelay="250">
+                            <Button.ToolTip>
+                                <ToolTip StaysOpen="True" Placement="Bottom">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="Tangent function"/>
+                                        <TextBlock Text="Use: tan(angleRadians)"/>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Tangent of an angle (radians)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: tan(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="ln(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Logarithm">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Natural logarithm"/>
+                                    <TextBlock Text="Use: ln(x), base e"/>
+                                        <TextBlock Text="About logarithms"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Natural logarithm (base e)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: ln(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="log(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Logarithm">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Logarithm base 10"/>
+                                    <TextBlock Text="Use: log(x), base 10"/>
+                                        <TextBlock Text="About logarithms"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Logarithm base 10" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: log(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="sqrt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Square_root">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Square root"/>
+                                    <TextBlock Text="Use: sqrt(x)"/>
+                                        <TextBlock Text="About square roots"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Square root" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: sqrt(x)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
 
-                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
+                        <Button Content="^" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Exponentiation">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Exponent"/>
+                                    <TextBlock Text="Use: a^b (a to the power b)"/>
+                                        <TextBlock Text="Exponentiation"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Exponentiation" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: a^b (a to the power b)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="min(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Minimum"/>
+                                    <TextBlock Text="Use: min(a,b,...)"/>
+                                        <TextBlock Text="Min &amp; max"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Minimum" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: min(a,b,...)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="max(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Maxima_and_minima">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Maximum"/>
+                                    <TextBlock Text="Use: max(a,b,...)"/>
+                                        <TextBlock Text="Min &amp; max"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Maximum" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: max(a,b,...)" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="pi" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Pi">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Pi constant"/>
+                                    <TextBlock Text="Use: pi ≈ 3.14159"/>
+                                        <TextBlock Text="About π"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Pi constant (≈ 3.14159)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pi" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="e" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/E_(mathematical_constant)">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Euler's number"/>
+                                    <TextBlock Text="Use: e ≈ 2.71828"/>
+                                        <TextBlock Text="About e"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Euler's number (≈ 2.71828)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: e" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://en.wikipedia.org/wiki/Comma-separated_values">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Argument separator"/>
+                                    <TextBlock Text="Use: Separate function arguments, e.g., max(1,2)"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Argument separator" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: Separate function arguments" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
                     </UniformGrid>
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->
                     <Rectangle Height="1" Fill="#33000000" Margin="{DynamicResource SciSeparatorMargin}"/>
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="{DynamicResource SciNumericPadMargin}">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 
                 <StackPanel x:Name="FinPad" Orientation="Vertical" Visibility="Collapsed" Margin="0,8,0,0">
                     <UniformGrid Columns="5">
-                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
+                        <Button Content="pmt(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/pmt-function">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Payment (PMT)"/>
+                                    <TextBlock Text="Use: pmt(rate, nper, pv, [fv], [type])"/>
+                                        <TextBlock Text="PMT function help"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Payment (loan)" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pmt(rate, nper, pv, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="pv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/pv-function">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Present Value (PV)"/>
+                                    <TextBlock Text="Use: pv(rate, nper, pmt, [fv], [type])"/>
+                                        <TextBlock Text="PV function help"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Present Value" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: pv(rate, nper, pmt, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="fv(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/fv-function">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Future Value (FV)"/>
+                                    <TextBlock Text="Use: fv(rate, nper, pmt, [pv], [type])"/>
+                                        <TextBlock Text="FV function help"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Future Value" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: fv(rate, nper, pmt, [pv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="nper(" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://exceljet.net/functions/nper-function">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Number of Periods (NPER)"/>
+                                    <TextBlock Text="Use: nper(rate, pmt, pv, [fv], [type])"/>
+                                        <TextBlock Text="NPER function help"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Number of Periods" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: nper(rate, pmt, pv, [fv], [type])" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Content="," Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False" Tag="https://support.microsoft.com/en-us/office/overview-of-formulas-in-excel-ecfdc708-9162-49e8-b993-c311f47ca173">
+                            <Button.ToolTip>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Argument separator"/>
+                                    <TextBlock Text="Use: Separate function arguments, e.g., pmt(0.05/12, 60, 10000)"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="What is it: Argument separator" IsEnabled="False"/>
+                                    <MenuItem Header="How to use: Separate function arguments" IsEnabled="False"/>
+                                    <Separator/>
+                                    <MenuItem Header="Learn more..." Click="OpenLearnLink_Click" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
                     </UniformGrid>
                     <!-- Use a thin rectangle instead of Separator to avoid extra vertical space -->
                     <Rectangle Height="1" Fill="#33000000" Margin="0,8,0,8"/>
                     <UniformGrid Rows="5" Columns="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}"/>
-                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}"/>
-                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}"/>
-                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
-                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}"/>
+                        <Button Content="7" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="8" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="9" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="÷" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="4" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="5" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="6" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="×" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="1" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="2" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="3" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="-" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="0" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="." Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="(" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content=")" Click="PadButton_Click" Style="{DynamicResource SquarePadButton}" Focusable="False"/>
+                        <Button Content="C" Click="PadButton_Click" Style="{DynamicResource WarnPadButton}" Focusable="False"/>
+                        <Button Content="⌫" Click="PadButton_Click" Style="{DynamicResource FuncPadButton}" Focusable="False"/>
+                        <Button Content="+" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
+                        <Button Content="=" Click="PadButton_Click" Style="{DynamicResource OpPadButton}" Focusable="False"/>
                     </UniformGrid>
                 </StackPanel>
 

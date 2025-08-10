@@ -6,12 +6,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Globalization;
 using MyTools.Core;
 using MyTools.MyCalculator.Services;
+using System.Diagnostics;
+using System.Windows.Navigation;
 
 namespace MyTools.MyCalculator;
 
@@ -29,8 +30,16 @@ public partial class MainWindow : Window
         Loaded += (_, __) =>
         {
             ApplyModeMenuChecks();
+            // Initial focus is set in XAML via FocusManager.FocusedElement
             // Defer sizing to after initial layout to ensure correct measurement
             Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            // Ensure caret blinks by explicitly focusing and placing it at the end
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                FormulaInput.Focus();
+                Keyboard.Focus(FormulaInput);
+                FormulaInput.CaretIndex = FormulaInput.Text?.Length ?? 0;
+            }), System.Windows.Threading.DispatcherPriority.Background);
         };
         ContentRendered += (_, __) => Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.Background);
     }
@@ -90,6 +99,7 @@ public partial class MainWindow : Window
         if (string.IsNullOrWhiteSpace(expr))
         {
             ResultText.Text = string.Empty;
+            if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
             return;
         }
 
@@ -97,7 +107,15 @@ public partial class MainWindow : Window
         {
             var eval = new ExpressionEvaluator(_calc);
             var result = eval.Evaluate(expr);
-            ResultText.Text = result.ToString(CultureInfo.InvariantCulture);
+            // Format with thousands separators and up to 6 decimals, trimming trailing zeros
+            // Example: 1234567.8900 -> "1,234,567.89"
+            string formatted = string.Format(CultureInfo.InvariantCulture, "{0:N6}", result);
+            if (formatted.Contains('.'))
+            {
+                formatted = formatted.TrimEnd('0').TrimEnd('.');
+            }
+            ResultText.Text = formatted;
+            if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
 
             // Save to history
             if (Application.Current is App app && app.HistoryStore is not null)
@@ -108,7 +126,11 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            ResultText.Text = ex.Message;
+            if (ErrorText != null)
+            {
+                ErrorText.Text = ex.Message;
+                ErrorText.Visibility = Visibility.Visible;
+            }
         }
     }
 
@@ -153,6 +175,7 @@ public partial class MainWindow : Window
     {
         FormulaInput.Text = string.Empty;
         ResultText.Text = string.Empty;
+    if (ErrorText != null) ErrorText.Visibility = Visibility.Collapsed;
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e) => Close();
@@ -160,6 +183,40 @@ public partial class MainWindow : Window
     private void About_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show(this, "My Calculator\nPart of the MyTools suite.", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void OpenHelp_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new HelpWindow { Owner = this };
+        win.ShowDialog();
+    }
+
+    public void HelpLink_RequestNavigate(object? sender, RequestNavigateEventArgs e)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
+            e.Handled = true;
+        }
+        catch { }
+    }
+
+    private void OpenLearnLink_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe && fe is MenuItem mi)
+        {
+            var url = mi.CommandParameter as string;
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); } catch { }
+            }
+        }
+    // Return focus to the input so caret remains visible
+    FormulaInput.Focus();
+    Keyboard.Focus(FormulaInput);
     }
 
     private void OpenSettings_Click(object sender, RoutedEventArgs e)
@@ -232,6 +289,8 @@ public partial class MainWindow : Window
             app.Mode = "General";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
@@ -242,6 +301,8 @@ public partial class MainWindow : Window
             app.Mode = "Scientific";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
@@ -252,6 +313,8 @@ public partial class MainWindow : Window
             app.Mode = "Financial";
             ApplyModeVisibility();
             _ = app.SettingsStore?.SetAsync("Mode", app.Mode);
+            FormulaInput.Focus();
+            Keyboard.Focus(FormulaInput);
         }
     }
 
