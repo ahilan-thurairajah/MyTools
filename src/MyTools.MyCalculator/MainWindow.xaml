@@ -40,12 +40,24 @@
             </Menu>
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar>
-                    <Button Content="Settings" Click="OpenSettings_Click"/>
+                    <!-- Settings icon -->
+                    <Button Click="OpenSettings_Click" ToolTip="Settings">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE713;"/>
+                    </Button>
                     <Separator/>
-                    <Button Content="Clear" Click="Clear_Click"/>
-                    <Button Content="= Evaluate" Click="Evaluate_Click"/>
+                    <!-- Clear icon (trash) -->
+                    <Button Click="Clear_Click" ToolTip="Clear">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE74D;"/>
+                    </Button>
+                    <!-- Evaluate icon (calculator equal to) -->
+                    <Button Click="Evaluate_Click" ToolTip="Evaluate">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE94E;"/>
+                    </Button>
                     <Separator/>
+                    <!-- Keep History as text for clarity -->
                     <Button Content="History" Click="OpenHistory_Click"/>
+                    <!-- Help '?' button -->
+                    <Button Click="OpenHelp_Click" ToolTip="Help">?</Button>
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>
@@ -94,7 +106,7 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource ResultFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
+                            <TextBlock x:Name="ResultText" FontSize="{DynamicResource FormulaFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="#33000000" Opacity="0.5" BlurRadius="6" ShadowDepth="0"/>
                                 </TextBlock.Effect>
