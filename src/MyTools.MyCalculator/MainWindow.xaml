@@ -142,9 +142,7 @@
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" Text="Sine function"/>
                                         <TextBlock Text="Use: sin(angleRadians)"/>
-                                        <TextBlock>
-                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                        </TextBlock>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
                                     </StackPanel>
                                 </ToolTip>
                             </Button.ToolTip>
@@ -164,9 +162,7 @@
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" Text="Cosine function"/>
                                         <TextBlock Text="Use: cos(angleRadians)"/>
-                                        <TextBlock>
-                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                        </TextBlock>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
                                     </StackPanel>
                                 </ToolTip>
                             </Button.ToolTip>
@@ -186,9 +182,7 @@
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" Text="Tangent function"/>
                                         <TextBlock Text="Use: tan(angleRadians)"/>
-                                        <TextBlock>
-                                            <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Trigonometric_functions" RequestNavigate="HelpLink_RequestNavigate">Learn trigonometric functions</Hyperlink>
-                                        </TextBlock>
+                                        <TextBlock Text="Learn: trigonometric functions"/>
                                     </StackPanel>
                                 </ToolTip>
                             </Button.ToolTip>
@@ -206,9 +200,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Natural logarithm"/>
                                     <TextBlock Text="Use: ln(x), base e"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Logarithm" RequestNavigate="HelpLink_RequestNavigate">About logarithms</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="About logarithms"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -225,9 +217,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Logarithm base 10"/>
                                     <TextBlock Text="Use: log(x), base 10"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Logarithm" RequestNavigate="HelpLink_RequestNavigate">About logarithms</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="About logarithms"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -244,9 +234,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Square root"/>
                                     <TextBlock Text="Use: sqrt(x)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Square_root" RequestNavigate="HelpLink_RequestNavigate">About square roots</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="About square roots"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -264,9 +252,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Exponent"/>
                                     <TextBlock Text="Use: a^b (a to the power b)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Exponentiation" RequestNavigate="HelpLink_RequestNavigate">Exponentiation</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="Exponentiation"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -283,9 +269,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Minimum"/>
                                     <TextBlock Text="Use: min(a,b,...)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Maxima_and_minima" RequestNavigate="HelpLink_RequestNavigate">Min &amp; max</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="Min &amp; max"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -302,9 +286,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Maximum"/>
                                     <TextBlock Text="Use: max(a,b,...)"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Maxima_and_minima" RequestNavigate="HelpLink_RequestNavigate">Min &amp; max</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="Min &amp; max"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -321,9 +303,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Pi constant"/>
                                     <TextBlock Text="Use: pi ≈ 3.14159"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Pi" RequestNavigate="HelpLink_RequestNavigate">About π</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="About π"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -340,9 +320,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Euler's number"/>
                                     <TextBlock Text="Use: e ≈ 2.71828"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/E_(mathematical_constant)" RequestNavigate="HelpLink_RequestNavigate">About e</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="About e"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -404,9 +382,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Payment (PMT)"/>
                                     <TextBlock Text="Use: pmt(rate, nper, pv, [fv], [type])"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pmt-function-0214da64-9a63-4996-bc20-214433fa6441" RequestNavigate="HelpLink_RequestNavigate">PMT function help</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="PMT function help"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -423,9 +399,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Present Value (PV)"/>
                                     <TextBlock Text="Use: pv(rate, nper, pmt, [fv], [type])"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/pv-function-23879d31-0e02-4321-be01-da16e8168b69" RequestNavigate="HelpLink_RequestNavigate">PV function help</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="PV function help"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -442,9 +416,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Future Value (FV)"/>
                                     <TextBlock Text="Use: fv(rate, nper, pmt, [pv], [type])"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/fv-function-0943a477-0b00-4e8b-a421-5d8b61c6de62" RequestNavigate="HelpLink_RequestNavigate">FV function help</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="FV function help"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
@@ -461,9 +433,7 @@
                                 <StackPanel>
                                     <TextBlock FontWeight="Bold" Text="Number of Periods (NPER)"/>
                                     <TextBlock Text="Use: nper(rate, pmt, pv, [fv], [type])"/>
-                                    <TextBlock>
-                                        <Hyperlink NavigateUri="https://support.microsoft.com/en-us/office/nper-function-8502f12e-5cd7-42d0-9780-f7b0bce4a2df" RequestNavigate="HelpLink_RequestNavigate">NPER function help</Hyperlink>
-                                    </TextBlock>
+                                        <TextBlock Text="NPER function help"/>
                                 </StackPanel>
                             </Button.ToolTip>
                             <Button.ContextMenu>
