@@ -1,0 +1,62 @@
+name: Release Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to attach assets to (e.g., v1.0.1). Leave empty to use current ref.'
+        required: false
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Inno Setup
+        run: choco install innosetup --yes
+
+      - name: Build
+        run: dotnet build MyTools.sln -c Release
+
+      - name: Generate App Icon
+        run: |
+          dotnet build tools/IconGen/IconGen.csproj -c Release
+          dotnet run --project tools/IconGen/IconGen.csproj -c Release -- installer
+
+      - name: Build Installer
+        shell: pwsh
+        env:
+          SIGN_PFX_BASE64: ${{ secrets.SIGN_PFX_BASE64 }}
+          SIGN_PWD: ${{ secrets.SIGN_PWD }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $env:INNO_ISCC = (Get-Command ISCC.exe).Source
+          $args = @('-File','installer/build-installer.ps1','-Configuration','Release')
+          if ($env:SIGN_PFX_BASE64 -and $env:SIGN_PWD) {
+            $pfxPath = Join-Path $env:RUNNER_TEMP 'codesign.pfx'
+            [IO.File]::WriteAllBytes($pfxPath, [Convert]::FromBase64String($env:SIGN_PFX_BASE64))
+            $args += @('-PfxPath', $pfxPath, '-PfxPassword', $env:SIGN_PWD)
+          }
+          pwsh -NoProfile -ExecutionPolicy Bypass @args
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          files: installer/output/MyTools-MyCalculator-Setup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

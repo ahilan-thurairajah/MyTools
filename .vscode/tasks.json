@@ -11,10 +11,7 @@
         "-c",
         "${config:dotnet.defaultConfiguration}"
       ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "group": { "kind": "build", "isDefault": true },
       "problemMatcher": ["$msCompile"]
     },
     {
@@ -30,15 +27,14 @@
       ],
       "group": "test",
       "problemMatcher": ["$msCompile"]
-    }
-    ,
+    },
     {
-  "label": "publish: MyCalculator (Release x64 single-file)",
+      "label": "publish: MyCalculator (Release x64 single-file)",
       "type": "shell",
       "command": "dotnet",
       "args": [
-  "publish",
-  "src/MyTools.MyCalculator/MyTools.MyCalculator.csproj",
+        "publish",
+        "src/MyTools.MyCalculator/MyTools.MyCalculator.csproj",
         "-c",
         "Release",
         "-r",
