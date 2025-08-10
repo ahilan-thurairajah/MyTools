@@ -33,8 +33,13 @@ public partial class MainWindow : Window
             // Initial focus is set in XAML via FocusManager.FocusedElement
             // Defer sizing to after initial layout to ensure correct measurement
             Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-            // Ensure caret blinks by explicitly focusing the input after load
-            Dispatcher.BeginInvoke(new Action(() => { FormulaInput.Focus(); Keyboard.Focus(FormulaInput); }), System.Windows.Threading.DispatcherPriority.Background);
+            // Ensure caret blinks by explicitly focusing and placing it at the end
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                FormulaInput.Focus();
+                Keyboard.Focus(FormulaInput);
+                FormulaInput.CaretIndex = FormulaInput.Text?.Length ?? 0;
+            }), System.Windows.Threading.DispatcherPriority.Background);
         };
         ContentRendered += (_, __) => Dispatcher.BeginInvoke(new Action(AdjustWindowSizeForMode), System.Windows.Threading.DispatcherPriority.Background);
     }

@@ -77,9 +77,23 @@
                                      VerticalContentAlignment="Center"
                                      KeyDown="FormulaInput_KeyDown"
                                      Background="Transparent"
-                                     BorderThickness="0"
                                      Foreground="{DynamicResource ScreenTextBrush}"
-                                     CaretBrush="{DynamicResource ScreenTextBrush}"/>
+                                     CaretBrush="{DynamicResource AccentBrush}"
+                                     Cursor="IBeam">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrushDark}"/>
+                                        <Setter Property="Padding" Value="4"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                             <TextBlock x:Name="ResultText" FontSize="{DynamicResource ResultFontSize}" Margin="0,4,0,0" Foreground="{DynamicResource ScreenTextBrush}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="#33000000" Opacity="0.5" BlurRadius="6" ShadowDepth="0"/>
